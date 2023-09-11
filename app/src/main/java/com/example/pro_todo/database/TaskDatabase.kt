@@ -1,11 +1,10 @@
-package com.example.pro_todo.Database
+package com.example.pro_todo.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.pro_todo.Dao.TaskDao
-import com.example.pro_todo.Model.Task
+import com.example.pro_todo.model.Task
 
 @Database(
     entities = [Task::class],
@@ -13,7 +12,7 @@ import com.example.pro_todo.Model.Task
     exportSchema = false
 )
 abstract class TaskDatabase : RoomDatabase() {
-    abstract val taskDao: TaskDao
+    abstract fun taskDao(): TaskDao
 
     companion object{
         private var INSTANCE : TaskDatabase? = null

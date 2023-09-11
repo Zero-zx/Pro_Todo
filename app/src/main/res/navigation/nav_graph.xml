@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.example.pro_todo.View.DashBoardScreen.DashBoardFragment"
+        android:name="com.example.pro_todo.view.dashBoardScreen.DashBoardFragment"
         android:label="fragment_dash_board"
         tools:layout="@layout/fragment_dash_board" />
     <fragment
         android:id="@+id/dailyTaskFragment"
-        android:name="com.example.pro_todo.View.DailyTaskScreen.DailyTaskFragment"
+        android:name="com.example.pro_todo.view.dailyTaskScreen.DailyTaskFragment"
         android:label="fragment_daily_task"
         tools:layout="@layout/fragment_daily_task" />
 </navigation>

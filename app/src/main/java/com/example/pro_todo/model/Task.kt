@@ -1,4 +1,4 @@
-package com.example.pro_todo.Model
+package com.example.pro_todo.model
 
 import android.widget.ImageView
 import androidx.room.ColumnInfo
@@ -9,10 +9,8 @@ import java.util.Date
 
 @Entity(tableName = "task_table")
 data class Task (
-    @PrimaryKey
-    @ColumnInfo(name = "task_id")
-    val id: String,
-    @ColumnInfo(name = "task_title")
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val title: String,
     val isDone: Boolean,
 

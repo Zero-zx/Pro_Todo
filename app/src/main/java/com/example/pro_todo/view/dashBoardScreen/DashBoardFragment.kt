@@ -1,4 +1,4 @@
-package com.example.pro_todo.View.DashBoardScreen
+package com.example.pro_todo.view.dashBoardScreen
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
