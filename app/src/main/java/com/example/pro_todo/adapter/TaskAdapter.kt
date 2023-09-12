@@ -14,11 +14,7 @@ class TaskAdapter(
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     private var taskList: List<Task> = listOf()
 
-    inner class TaskViewHolder(val binding: TaskViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(task: Task){
-
-        }
-    }
+    inner class TaskViewHolder(val binding: TaskViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -29,7 +25,7 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.binding.apply {
             tvTask.text = taskList[position].title
-            //tvTime.text = taskList[position].
+            tvTime.text = "17:00"
         }
     }
 

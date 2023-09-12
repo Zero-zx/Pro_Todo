@@ -6,12 +6,11 @@ import com.example.pro_todo.database.TaskDao
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.model.Task
 
-class TaskRepository(app: Application) {
-    private val taskDao: TaskDao
-    init {
-        val taskDatabase: TaskDatabase = TaskDatabase.getInstance(app)
-        taskDao = taskDatabase.taskDao()
-    }
+class TaskRepository(private val taskDao: TaskDao) {
+//    init {
+//        val taskDatabase: TaskDatabase = TaskDatabase.getInstance(app)
+//        taskDao = taskDatabase.taskDao()
+//    }
 
     suspend fun insertTask(task: Task) = taskDao.insertTask(task)
     suspend fun updateTask(task: Task) = taskDao.updateTask(task)
