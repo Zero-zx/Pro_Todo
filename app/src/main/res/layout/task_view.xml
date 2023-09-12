@@ -5,8 +5,8 @@
     android:background="@drawable/rounded_frame"
     android:clipToOutline="true"
     android:paddingLeft="16dp"
-    android:layout_margin="16dp"
-    android:layout_height="60dp">
+    android:layout_margin="8dp"
+    android:layout_height="70dp">
 
     <TextView
         android:id="@+id/tvTask"

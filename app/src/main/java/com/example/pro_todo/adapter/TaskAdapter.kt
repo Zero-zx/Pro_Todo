@@ -37,4 +37,9 @@ class TaskAdapter(
         this.taskList = tasks
         notifyDataSetChanged()
     }
+
+    fun deleteTask(position: Int){
+        onDelete(taskList[position])
+        notifyDataSetChanged()
+    }
 }

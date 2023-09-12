@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.MainActivity
@@ -58,15 +60,39 @@ class DailyTaskFragment : Fragment() {
         taskViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[TaskViewModel::class.java]
         rvDailyTask.adapter = adapter
         rvDailyTask.layoutManager = LinearLayoutManager(requireContext())
+
         taskViewModel.getAllTask().observe(viewLifecycleOwner, Observer { task ->
             adapter.setTasks(task)
         })
+
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(rvDailyTask)
+
+    }
+
+    val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.adapterPosition
+            if (direction == ItemTouchHelper.LEFT) {
+                adapter.deleteTask(position)
+               // adapter.notifyItemChanged(position)
+                Toast.makeText(requireContext(), "Swipe left", Toast.LENGTH_SHORT).show()
+            } else if (direction == ItemTouchHelper.RIGHT) {
+                adapter.notifyItemChanged(position)
+                Toast.makeText(requireContext(), "Swipe right", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private val onItemCLick: (Task) -> Unit={
-
     }
 
     private val onItemDelete: (Task) -> Unit={
-
-    }}
+        taskViewModel.deleteTask(it)
+    }
+}
