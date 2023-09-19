@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.model.Task
 import com.example.pro_todo.databinding.TaskViewBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TaskAdapter(
     private val context: Context,
@@ -24,8 +26,11 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.binding.apply {
-            tvTask.text = taskList[position].title
-            tvTime.text = "17:00"
+            val task = taskList[position]
+            tvTask.text = task.title
+
+            val dateFormat = SimpleDateFormat("HH:mm a dd/MM", Locale.getDefault())
+            tvTime.text = dateFormat.format(task.date)
         }
     }
 

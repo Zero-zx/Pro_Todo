@@ -1,31 +1,24 @@
 package com.example.pro_todo.view.dailyTaskScreen
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pro_todo.MainActivity
-import com.example.pro_todo.MainActivity2
 import com.example.pro_todo.adapter.TaskAdapter
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentDailyTaskBinding
 import com.example.pro_todo.model.Task
 import com.example.pro_todo.repository.TaskRepository
+import com.example.pro_todo.view.dialog.AddTaskFragment
 import com.example.pro_todo.viewModel.TaskViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
-import java.util.UUID
 
 class DailyTaskFragment : Fragment() {
     private lateinit var binding: FragmentDailyTaskBinding
@@ -46,10 +39,12 @@ class DailyTaskFragment : Fragment() {
 
     private fun onClickListener() {
         binding.fabAddTask.setOnClickListener{
-            val intent = Intent(requireContext(), MainActivity2::class.java)
-            Log.d("Check", "3")
-            startActivity(intent)
+            val fragmentManager = childFragmentManager
+            val dialog = AddTaskFragment()
+            dialog.show(fragmentManager, "my_dialog")
         }
+
+
     }
 
     private fun initComponents() {
@@ -81,7 +76,7 @@ class DailyTaskFragment : Fragment() {
             if (direction == ItemTouchHelper.LEFT) {
                 adapter.deleteTask(position)
                // adapter.notifyItemChanged(position)
-                Toast.makeText(requireContext(), "Swipe left", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show()
             } else if (direction == ItemTouchHelper.RIGHT) {
                 adapter.notifyItemChanged(position)
                 Toast.makeText(requireContext(), "Swipe right", Toast.LENGTH_SHORT).show()
