@@ -1,4 +1,4 @@
-package com.example.pro_todo.view.dialog
+package com.example.pro_todo.view.addTaskScreen
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -11,9 +11,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TimePicker
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.R
-import com.example.pro_todo.adapter.TaskAdapter
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddTaskBinding
 import com.example.pro_todo.model.Task
@@ -30,6 +28,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private lateinit var etTitle: EditText
     private lateinit var etDes: EditText
     private lateinit var btnSetTime: ImageButton
+    private lateinit var btnSetTag: ImageButton
     private lateinit var btnSave: ImageButton
 
     private var day = 0
@@ -57,6 +56,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
         etTitle = binding.etTitle
         etDes = binding.etDescription
         btnSetTime = binding.btnSetTime
+        btnSetTag = binding.btnSetTag
         btnSave = binding.btnSave
 
         val repository = TaskRepository(TaskDatabase.getInstance(requireContext()).taskDao())
@@ -67,10 +67,17 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private fun onClickListener(){
         pickDate()
         btnSave.setOnClickListener{
-            val task = Task(0, etTitle.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false)
+            val task = Task(0, etTitle.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", R.drawable.ic_study)
             taskViewModel.insertTask(task)
             dismiss()
         }
+
+        btnSetTag.setOnClickListener{
+            val fragmentManager = childFragmentManager
+            val dialog = AddTagFragment()
+            dialog.show(fragmentManager, "my_dialog")
+        }
+
     }
 
     private fun pickDate() {

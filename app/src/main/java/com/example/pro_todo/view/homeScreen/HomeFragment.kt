@@ -30,10 +30,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClickListener() {
-        TODO("Not yet implemented")
     }
 
     private fun initComponents() {
-        TODO("Not yet implemented")
     }
 }

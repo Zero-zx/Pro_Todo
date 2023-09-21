@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="task_back">#F5F6F7</color>
     <color name="hint_text">#AFAFAF</color>
+    <color name="dark_blue">#809CFF</color>
 </resources>

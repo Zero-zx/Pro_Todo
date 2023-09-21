@@ -14,7 +14,8 @@ data class Task (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
-    //val time: LocalTime,
     val date: Date,
     val isDone: Boolean,
+    val type: String,
+    val icon: Int
 )

@@ -10,5 +10,6 @@
     <string name="home">Home</string>
     <string name="tasks">Task</string>
     <string name="description">Description</string>
+    <string name="choose_category">Choose Category</string>
 
 </resources>

@@ -34,12 +34,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private val onItemCLick: (Task) -> Unit={
-
-    }
-
-    private val onItemDelete: (Task) -> Unit={
-
-    }
-
 }

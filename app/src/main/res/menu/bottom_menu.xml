@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/homeFragment"
+    <item
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_add_new"
-        app:showAsAction="ifRoom"
-        android:title="home" />
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/garbageFragment"
-        android:title="Garbage"
-        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/dailyTaskFragment"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/tasks"
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/profileFragment"
-        android:title="Profile"
-        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/dashBoardFragment"
+        android:title="@string/dashboard"
+        app:showAsAction="ifRoom" />
 </menu>

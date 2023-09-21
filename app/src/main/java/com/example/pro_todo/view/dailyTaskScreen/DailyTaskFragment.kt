@@ -16,7 +16,7 @@ import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentDailyTaskBinding
 import com.example.pro_todo.model.Task
 import com.example.pro_todo.repository.TaskRepository
-import com.example.pro_todo.view.dialog.AddTaskFragment
+import com.example.pro_todo.view.addTaskScreen.AddTaskFragment
 import com.example.pro_todo.viewModel.TaskViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
 
