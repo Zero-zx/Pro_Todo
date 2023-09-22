@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.databinding.CateViewBinding
 import com.example.pro_todo.model.Task
 import com.example.pro_todo.databinding.TaskViewBinding
+import com.example.pro_todo.model.Cate
 import com.example.pro_todo.viewModel.CateViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class CateAdapter(
     private val context: Context,
-    private val onClick: (Task) -> Unit,
-    private val onDelete: (Task) -> Unit
+    private val onClick: (Cate) -> Unit,
+    private val onDelete: (Cate) -> Unit
 ) : RecyclerView.Adapter<CateAdapter.CateViewHolder>() {
-    private var taskList: List<Task> = listOf()
+    private var cateList: List<Cate> = listOf()
 
     inner class CateViewHolder(val binding: CateViewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -28,7 +29,7 @@ class CateAdapter(
 
     override fun onBindViewHolder(holder: CateViewHolder, position: Int) {
         holder.binding.apply {
-            val task = taskList[position]
+            val cate = cateList[position]
 
         }
     }
@@ -36,16 +37,16 @@ class CateAdapter(
 
 
     override fun getItemCount(): Int {
-        return taskList.size
+        return cateList.size
     }
 
-    fun setTasks(tasks: List<Task>){
-        this.taskList = tasks
+    fun setCate(cates: List<Cate>){
+        this.cateList = cates
         notifyDataSetChanged()
     }
 
-    fun deleteTask(position: Int){
-        onDelete(taskList[position])
+    fun deleteCate(position: Int){
+        onDelete(cateList[position])
         notifyDataSetChanged()
     }
 }

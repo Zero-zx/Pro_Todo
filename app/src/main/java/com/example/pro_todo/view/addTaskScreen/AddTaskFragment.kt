@@ -67,7 +67,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private fun onClickListener(){
         pickDate()
         btnSave.setOnClickListener{
-            val task = Task(0, etTitle.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", R.drawable.ic_study)
+            val task = Task(etTitle.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", 1, R.drawable.ic_study)
             taskViewModel.insertTask(task)
             dismiss()
         }
