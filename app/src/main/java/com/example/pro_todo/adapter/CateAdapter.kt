@@ -5,35 +5,41 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.databinding.CateViewBinding
-import com.example.pro_todo.model.Task
-import com.example.pro_todo.databinding.TaskViewBinding
+import com.example.pro_todo.databinding.TagViewBinding
 import com.example.pro_todo.model.Cate
-import com.example.pro_todo.viewModel.CateViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.security.PrivateKey
 
 class CateAdapter(
     private val context: Context,
+    private val layoutType: Int,
     private val onClick: (Cate) -> Unit,
-    private val onDelete: (Cate) -> Unit
-) : RecyclerView.Adapter<CateAdapter.CateViewHolder>() {
+    private val onDelete: (Cate) -> Unit,
+    private val iconList: List<Int> = listOf()
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var cateList: List<Cate> = listOf()
 
-    inner class CateViewHolder(val binding: CateViewBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CateViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = CateViewBinding.inflate(layoutInflater, parent, false)
-        return CateViewHolder(binding)
+    companion object{
+        const val FIRST_VIEW = 1
+        const val SECOND_VIEW = 2
     }
 
-    override fun onBindViewHolder(holder: CateViewHolder, position: Int) {
-        holder.binding.apply {
-            val cate = cateList[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
 
+        return when(layoutType){
+            FIRST_VIEW -> FirstCateViewHolder(CateViewBinding.inflate(layoutInflater, parent, false), cateList)
+            SECOND_VIEW -> SecondCateViewHolder(TagViewBinding.inflate(layoutInflater, parent, false))
+            else -> throw IllegalArgumentException(viewType.toString())
         }
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        return when(layoutType){
+            FIRST_VIEW -> (holder as FirstCateViewHolder).bind(cateList[position])
+            SECOND_VIEW -> (holder as SecondCateViewHolder).bind(cateList[position])
+            else -> throw IllegalArgumentException("Invalid item type")
+        }
+    }
 
 
     override fun getItemCount(): Int {

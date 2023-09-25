@@ -7,8 +7,8 @@ import com.example.pro_todo.model.Cate
 import com.example.pro_todo.model.Task
 
 class CateRepository(private val cateDao: CateDao)  {
-    suspend fun insertCate(cate: Cate) = cateDao.insertTask(cate)
-    suspend fun updateCate(cate: Cate) = cateDao.updateTask(cate)
-    suspend fun deleteCate(cate: Cate) = cateDao.deleteTask(cate)
-    fun getAllCate(): LiveData<List<Cate>> = cateDao.getAllTask()
+    suspend fun insertCate(cate: Cate) = cateDao.insertCate(cate)
+    suspend fun updateCate(cate: Cate) = cateDao.updateCate(cate)
+    suspend fun deleteCate(cate: Cate) = cateDao.deleteCate(cate)
+    fun getAllCate(): LiveData<List<Cate>> = cateDao.getAllCate()
 }

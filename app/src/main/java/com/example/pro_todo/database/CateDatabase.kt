@@ -13,7 +13,6 @@ import com.example.pro_todo.model.Cate
     version = 1,
     exportSchema = false
 )
-@TypeConverters(Converter::class)
 abstract class CateDatabase : RoomDatabase() {
     abstract fun cateDao(): CateDao
 
@@ -24,7 +23,7 @@ abstract class CateDatabase : RoomDatabase() {
                 return INSTANCE?: Room.databaseBuilder(
                     context.applicationContext,
                     CateDatabase::class.java,
-                    "task_db"
+                    "cate_db"
                 ).build().also {
                     INSTANCE = it
                 }

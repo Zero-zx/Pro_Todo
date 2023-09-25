@@ -12,12 +12,12 @@ import com.example.pro_todo.model.Task
 @Dao
 interface CateDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTask(cate: Cate)
+    suspend fun insertCate(cate: Cate)
     @Update
-    suspend fun updateTask(cate: Cate)
+    suspend fun updateCate(cate: Cate)
     @Delete
-    suspend fun deleteTask(cate: Cate)
+    suspend fun deleteCate(cate: Cate)
 
     @Query("select * from cate_table")
-    fun getAllTask(): LiveData<List<Cate>>
+    fun getAllCate(): LiveData<List<Cate>>
 }

@@ -7,15 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.R
 import com.example.pro_todo.adapter.CateAdapter
+import com.example.pro_todo.adapter.CateAdapter.Companion.SECOND_VIEW
 import com.example.pro_todo.database.CateDatabase
 import com.example.pro_todo.databinding.FragmentAddTagBinding
 import com.example.pro_todo.model.Cate
+import com.example.pro_todo.model.Icon
 import com.example.pro_todo.repository.CateRepository
 import com.example.pro_todo.viewModel.CateViewModel
 import com.example.pro_todo.viewModel.CateViewModelFactory
@@ -41,7 +45,7 @@ class AddTagFragment : DialogFragment() {
 
     private fun initComponent() {
         rvAddTag = binding.rvAddTask
-        adapter = CateAdapter(requireContext(), onItemCLick, onItemDelete)
+        adapter = CateAdapter(requireContext(), SECOND_VIEW, onItemCLick, onItemDelete, Icon.getIcons())
         rvAddTag.adapter = adapter
         rvAddTag.layoutManager = GridLayoutManager(requireContext(), 3)
         btnAddCate = binding.btnAddCate
@@ -49,12 +53,16 @@ class AddTagFragment : DialogFragment() {
         val repository = CateRepository(CateDatabase.getInstance(requireContext()).cateDao())
         val viewModelFactory = CateViewModelFactory(repository)
         cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
+        cateViewModel.getAllCate().observe(viewLifecycleOwner, Observer { cate ->
+            adapter.setCate(cate)
+        })
     }
 
     private fun onClickListener(){
         btnAddCate.setOnClickListener {
-            val cate = Cate("Nice", 3, R.drawable.ic_study)
+            val cate = Cate("Nice", 0, R.drawable.ic_study)
             cateViewModel.insertCate(cate)
+            Toast.makeText(requireContext(),"Oke", Toast.LENGTH_SHORT).show()
         }
     }
     private val onItemCLick: (Cate) -> Unit={

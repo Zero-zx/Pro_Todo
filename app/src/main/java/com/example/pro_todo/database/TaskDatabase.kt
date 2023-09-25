@@ -14,6 +14,7 @@ import com.example.pro_todo.model.Task
     version = 1,
     exportSchema = false
 )
+
 @TypeConverters(Converter::class)
 abstract class TaskDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
