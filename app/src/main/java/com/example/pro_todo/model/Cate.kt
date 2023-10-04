@@ -9,8 +9,10 @@ data class Cate(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
+    val haveDone: Int,
     val size: Int,
-    val icon: Int
+    val icon: Int,
+    val color: Int
 ){
-    constructor(title: String, size: Int, icon: Int): this(0, title, size, icon)
+    constructor(title: String, haveDone: Int, size: Int, icon: Int, color: Int): this(0, title, haveDone, size, icon, color)
 }

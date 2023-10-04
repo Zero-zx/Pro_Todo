@@ -14,12 +14,13 @@ import java.util.Date
 data class Task (
     @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
+    val des: String,
     val date: Date,
     val isDone: Boolean,
     val type: String,
     val categoryId: Int,
     val icon: Int
 ){
-    constructor(title: String, date: Date, isDone: Boolean, type: String, categoryId: Int, icon: Int): this(0, title, date, isDone, type, categoryId, icon)
+    constructor(title: String, des: String, date: Date, isDone: Boolean, type: String, categoryId: Int, icon: Int): this(0, title, des, date, isDone, type, categoryId, icon)
 }
 

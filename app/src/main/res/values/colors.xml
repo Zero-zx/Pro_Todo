@@ -5,4 +5,13 @@
     <color name="task_back">#F5F6F7</color>
     <color name="hint_text">#AFAFAF</color>
     <color name="dark_blue">#809CFF</color>
+    <color name="purple">#8687E7</color>
+    <color name="color_1">#C9CC41</color>
+    <color name="color_2">#66CC41</color>
+    <color name="color_3">#41CCA7</color>
+    <color name="color_4">#4181CC</color>
+    <color name="color_5">#41A2CC</color>
+    <color name="color_6">#CC8441</color>
+    <color name="color_7">#9741CC</color>
+    <color name="color_8">#CC4173</color>
 </resources>

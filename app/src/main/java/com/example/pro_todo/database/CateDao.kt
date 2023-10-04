@@ -20,4 +20,7 @@ interface CateDao {
 
     @Query("select * from cate_table")
     fun getAllCate(): LiveData<List<Cate>>
+
+    @Query("SELECT * FROM cate_table WHERE id = :id")
+    fun getUserById(id: Long): Cate
 }

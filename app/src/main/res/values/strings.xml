@@ -11,5 +11,12 @@
     <string name="tasks">Task</string>
     <string name="description">Description</string>
     <string name="choose_category">Choose Category</string>
+    <string name="create_new_category">Create new category</string>
+    <string name="category_name">Category name:</string>
+    <string name="category_nameis">Category name:</string>
+    <string name="category_icon">Category icon:</string>
+    <string name="category_color">Category color:</string>
+    <string name="create_category">Create Category</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

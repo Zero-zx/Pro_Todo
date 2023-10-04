@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.databinding.CateViewBinding
 import com.example.pro_todo.databinding.TagViewBinding
 import com.example.pro_todo.model.Cate
-import java.security.PrivateKey
 
 class CateAdapter(
     private val context: Context,
@@ -36,7 +35,7 @@ class CateAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         return when(layoutType){
             FIRST_VIEW -> (holder as FirstCateViewHolder).bind(cateList[position])
-            SECOND_VIEW -> (holder as SecondCateViewHolder).bind(cateList[position])
+            SECOND_VIEW -> (holder as SecondCateViewHolder).bind(cateList[position], onClick)
             else -> throw IllegalArgumentException("Invalid item type")
         }
     }
