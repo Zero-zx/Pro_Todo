@@ -14,11 +14,10 @@ import com.example.pro_todo.model.Icon
 
 class ColorAdapter(
     private val context: Context,
-    private val onClick: (Icon) -> Unit,
-    private val onDelete: (Icon) -> Unit
+    private val onClick: (Int) -> Unit,
+    private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
     private var colorList: List<Int> = Color.getColors()
-
     inner class ColorViewHolder(val binding: ColorViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
@@ -30,7 +29,12 @@ class ColorAdapter(
     override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
         holder.binding.apply {
 //            ivColor.setBackgroundColor( ContextCompat.getColor(context,  colorList[position]))
-            ivColor.setBackgroundColor(colorList[position])
+            val context = context
+            val color = context.getColor(colorList[position])
+            ivColor.backgroundTintList = ColorStateList.valueOf(color)
+            ivColor.setOnClickListener {
+                onClick(colorList[position])
+            }
         }
     }
 

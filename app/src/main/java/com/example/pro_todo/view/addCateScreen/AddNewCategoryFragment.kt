@@ -1,48 +1,44 @@
 package com.example.pro_todo.view.addCateScreen
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TimePicker
-import androidx.fragment.app.DialogFragment
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.R
 import com.example.pro_todo.adapter.ColorAdapter
 import com.example.pro_todo.adapter.IconAdapter
-import com.example.pro_todo.callback.DialogFragmentCallback
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddCateBinding
-import com.example.pro_todo.databinding.FragmentAddTaskBinding
-import com.example.pro_todo.model.Cate
+import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
-import com.example.pro_todo.model.Task
 import com.example.pro_todo.repository.TaskRepository
-import com.example.pro_todo.view.addTaskScreen.AddTagFragment
+import com.example.pro_todo.viewModel.CateViewModel
 import com.example.pro_todo.viewModel.TaskViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.util.Calendar
-import java.util.Date
 
-class AddCateFragment: Fragment() {
+class AddNewCategoryFragment: Fragment() {
     private lateinit var binding: FragmentAddCateBinding
-    private lateinit var taskViewModel: TaskViewModel
+    private lateinit var cateViewModel: CateViewModel
     private lateinit var rvCategory: RecyclerView
+    private lateinit var iconAdapter: IconAdapter
     private lateinit var rvColor: RecyclerView
     private lateinit var btnCreateCate: Button
     private lateinit var btnCancel: Button
+    private lateinit var flPreview: FrameLayout
+    private lateinit var ivPreview: ImageView
+    private var icon: Int = 0
+    private var color: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,13 +57,14 @@ class AddCateFragment: Fragment() {
         btnCancel = binding.btnCancel
         val repository = TaskRepository(TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = TaskViewModelFactory(repository)
-        taskViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[TaskViewModel::class.java]
-
-        val iconAdapter = IconAdapter(requireContext(), onItemCLick, onItemDelete)
+        cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
+        iconAdapter = IconAdapter(requireContext(), onIconCLick, onIconDelete)
         rvCategory.adapter = iconAdapter
-
         val colorAdapter = ColorAdapter(requireContext(), onItemCLick, onItemDelete)
         rvColor.adapter = colorAdapter
+        flPreview = binding.flPreview
+        ivPreview = binding.ivPreview
+
     }
 
     private fun onClickListener() {
@@ -76,15 +73,28 @@ class AddCateFragment: Fragment() {
         }
 
         btnCreateCate.setOnClickListener {
+            val cate = Category("Nice", 0, 1, icon, color)
+            cateViewModel.insertCate(cate)
+            parentFragmentManager.popBackStack()
 
         }
     }
-    private val onItemCLick: (Icon) -> Unit={
-
-
+    private val onIconCLick: (Int) -> Unit={
+        Toast.makeText(requireContext(),"Clicked", Toast.LENGTH_SHORT).show()
+        ivPreview.setImageResource(it);
+        icon = it
     }
 
-    private val onItemDelete: (Icon) -> Unit={
+    private val onIconDelete: (Int) -> Unit={
+    }
+    private val onItemCLick: (Int) -> Unit={
+        Toast.makeText(requireContext(),"Clicked", Toast.LENGTH_SHORT).show()
+        flPreview.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(it))
+        color = it
+    }
+
+    private val onItemDelete: (Int) -> Unit={
     }
 
 }
+

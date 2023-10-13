@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.pro_todo.model.Cate
+import com.example.pro_todo.model.Category
 import com.example.pro_todo.repository.CateRepository
 import kotlinx.coroutines.launch
 
@@ -12,19 +12,19 @@ class CateViewModel(
     private val repository: CateRepository
 ): ViewModel() {
 
-    fun insertCate(cate: Cate) = viewModelScope.launch {
-        repository.insertCate(cate)
+    fun insertCate(category: Category) = viewModelScope.launch {
+        repository.insertCate(category)
     }
 
-    fun deleteCate(cate: Cate) = viewModelScope.launch {
-        repository.deleteCate(cate)
+    fun deleteCate(category: Category) = viewModelScope.launch {
+        repository.deleteCate(category)
     }
 
-    fun updateCate(cate: Cate) = viewModelScope.launch {
-        repository.updateCate(cate)
+    fun updateCate(category: Category) = viewModelScope.launch {
+        repository.updateCate(category)
     }
 
-    fun getAllCate():LiveData<List<Cate>> = repository.getAllCate()
+    fun getAllCate():LiveData<List<Category>> = repository.getAllCate()
 }
 class CateViewModelFactory(private val repository: CateRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

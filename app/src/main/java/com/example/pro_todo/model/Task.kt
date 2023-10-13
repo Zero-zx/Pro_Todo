@@ -12,15 +12,13 @@ import java.util.Date
 
 @Entity(tableName = "task_table")
 data class Task (
-    @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val des: String,
     val date: Date,
     val isDone: Boolean,
     val type: String,
     val categoryId: Int,
-    val icon: Int
-){
-    constructor(title: String, des: String, date: Date, isDone: Boolean, type: String, categoryId: Int, icon: Int): this(0, title, des, date, isDone, type, categoryId, icon)
-}
+    val icon: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0
+)
 

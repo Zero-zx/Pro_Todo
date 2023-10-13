@@ -1,14 +1,12 @@
 package com.example.pro_todo.repository
 
 import androidx.lifecycle.LiveData
-import com.example.pro_todo.database.CateDao
-import com.example.pro_todo.database.TaskDao
-import com.example.pro_todo.model.Cate
-import com.example.pro_todo.model.Task
+import com.example.pro_todo.database.CategoryDao
+import com.example.pro_todo.model.Category
 
-class CateRepository(private val cateDao: CateDao)  {
-    suspend fun insertCate(cate: Cate) = cateDao.insertCate(cate)
-    suspend fun updateCate(cate: Cate) = cateDao.updateCate(cate)
-    suspend fun deleteCate(cate: Cate) = cateDao.deleteCate(cate)
-    fun getAllCate(): LiveData<List<Cate>> = cateDao.getAllCate()
+class CateRepository(private val categoryDao: CategoryDao)  {
+    suspend fun insertCate(category: Category) = categoryDao.insertCate(category)
+    suspend fun updateCate(category: Category) = categoryDao.updateCate(category)
+    suspend fun deleteCate(category: Category) = categoryDao.deleteCate(category)
+    fun getAllCate(): LiveData<List<Category>> = categoryDao.getAllCate()
 }

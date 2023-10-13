@@ -1,17 +1,15 @@
 package com.example.pro_todo.adapter
 
-import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.databinding.TagViewBinding
-import com.example.pro_todo.model.Cate
+import com.example.pro_todo.model.Category
 
 class SecondCateViewHolder(private val binding: TagViewBinding): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(cate: Cate, onClick: (Cate) -> Unit){
-        binding.ivIcon.setImageResource(cate.icon)
+    fun bind(category: Category, onClick: (Category) -> Unit){
+        binding.ivIcon.setImageResource(category.icon)
         binding.tagView.setOnClickListener{
-            onClick(cate)
+            onClick(category)
 
         }
     }

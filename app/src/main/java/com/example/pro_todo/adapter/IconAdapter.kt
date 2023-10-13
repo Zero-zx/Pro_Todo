@@ -1,6 +1,7 @@
 package com.example.pro_todo.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +14,8 @@ import java.util.Locale
 
 class IconAdapter(
     private val context: Context,
-    private val onClick: (Icon) -> Unit,
-    private val onDelete: (Icon) -> Unit
+    private val onClick: (Int) -> Unit,
+    private val onDelete: (Int) -> Unit
 ) : RecyclerView.Adapter<IconAdapter.IconViewHolder>() {
     private var iconList: List<Int> = Icon.getIcons()
 
@@ -29,6 +30,9 @@ class IconAdapter(
     override fun onBindViewHolder(holder: IconViewHolder, position: Int) {
         holder.binding.apply {
             ivIcon.setImageResource(iconList[position])
+            ivIcon.setOnClickListener {
+                Log.d("check", "no")
+                onClick(iconList[position]) }
         }
     }
 
@@ -36,4 +40,7 @@ class IconAdapter(
         return iconList.size
     }
 
+    fun updateIcon(position: Int){
+        onClick(iconList[position])
+    }
 }

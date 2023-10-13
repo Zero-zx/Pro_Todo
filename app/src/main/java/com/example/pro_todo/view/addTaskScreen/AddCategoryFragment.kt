@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,18 +17,18 @@ import com.example.pro_todo.R
 import com.example.pro_todo.adapter.CateAdapter
 import com.example.pro_todo.adapter.CateAdapter.Companion.SECOND_VIEW
 import com.example.pro_todo.callback.DialogFragmentCallback
-import com.example.pro_todo.database.CateDatabase
+import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddTagBinding
-import com.example.pro_todo.model.Cate
+import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
 import com.example.pro_todo.repository.CateRepository
-import com.example.pro_todo.view.addCateScreen.AddCateFragment
+import com.example.pro_todo.view.addCateScreen.AddNewCategoryFragment
 import com.example.pro_todo.viewModel.CateViewModel
 import com.example.pro_todo.viewModel.CateViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class AddTagFragment : DialogFragment() {
+class AddCategoryFragment : DialogFragment() {
     private lateinit var binding: FragmentAddTagBinding
     private lateinit var cateViewModel: CateViewModel
     private lateinit var rvAddTag: RecyclerView
@@ -61,7 +60,7 @@ class AddTagFragment : DialogFragment() {
         btnAddCate = binding.btnAddCate
         nav = requireActivity().findViewById(R.id.btNavigation)
         nav.visibility = View.VISIBLE
-        val repository = CateRepository(CateDatabase.getInstance(requireContext()).cateDao())
+        val repository = CateRepository(TaskDatabase.getInstance(requireContext()).cateDao())
         val viewModelFactory = CateViewModelFactory(repository)
         cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
         cateViewModel.getAllCate().observe(viewLifecycleOwner, Observer { cate ->
@@ -76,7 +75,7 @@ class AddTagFragment : DialogFragment() {
 //            Toast.makeText(requireContext(),"Oke", Toast.LENGTH_SHORT).show()
             nav.visibility = View.GONE
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, AddCateFragment()).addToBackStack("1")
+            transaction.replace(R.id.nav_host_fragment, AddNewCategoryFragment()).addToBackStack("1")
             transaction.commit()
 
 
@@ -85,13 +84,13 @@ class AddTagFragment : DialogFragment() {
 //            dialog.show(fragmentManager, "my_dialog")
         }
     }
-    private val onItemCLick: (Cate) -> Unit={
+    private val onItemCLick: (Category) -> Unit={
         callback?.onDataReceived(it.id)
         Log.d("check", it.id.toString())
         dismiss()
     }
 
-    private val onItemDelete: (Cate) -> Unit={
+    private val onItemDelete: (Category) -> Unit={
         cateViewModel.deleteCate(it)
     }
 

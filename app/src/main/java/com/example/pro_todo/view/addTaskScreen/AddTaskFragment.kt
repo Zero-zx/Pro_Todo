@@ -23,8 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Calendar
 import java.util.Date
 
-class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener,
-    TimePickerDialog.OnTimeSetListener, DialogFragmentCallback {
+class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, DialogFragmentCallback {
     private lateinit var binding: FragmentAddTaskBinding
     private lateinit var taskViewModel: TaskViewModel
     private lateinit var etTitle: EditText
@@ -65,29 +64,20 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
 
         val repository = TaskRepository(TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = TaskViewModelFactory(repository)
-        taskViewModel =
-            ViewModelProvider(requireActivity(), viewModelFactory)[TaskViewModel::class.java]
+        taskViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[TaskViewModel::class.java]
     }
 
-    private fun onClickListener() {
+    private fun onClickListener(){
         pickDate()
-        btnSave.setOnClickListener {
-            val task = Task(
-                etTitle.text.toString(),
-                etDes.text.toString(),
-                Date(savedYear, savedMonth, savedDay, savedHour, savedMinute),
-                false,
-                "Study",
-                cateId,
-                R.drawable.ic_study
-            )
+        btnSave.setOnClickListener{
+            val task = Task( etTitle.text.toString(), etDes.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", cateId, R.drawable.ic_study)
             taskViewModel.insertTask(task)
             dismiss()
         }
 
-        btnSetTag.setOnClickListener {
+        btnSetTag.setOnClickListener{
             val fragmentManager = childFragmentManager
-            val dialog = AddTagFragment()
+            val dialog = AddCategoryFragment()
             dialog.setCallback(this)
             dialog.show(fragmentManager, "my_dialog")
         }
@@ -95,13 +85,13 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     }
 
     private fun pickDate() {
-        btnSetTime.setOnClickListener {
+        btnSetTime.setOnClickListener{
             getDateTimeCalendar()
             DatePickerDialog(requireContext(), this, year, month, day).show()
         }
     }
 
-    private fun getDateTimeCalendar() {
+    private fun getDateTimeCalendar(){
         val cal = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)

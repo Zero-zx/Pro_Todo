@@ -1,11 +1,11 @@
 package com.example.pro_todo.model
 
+import android.graphics.drawable.Drawable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 
 @Entity(tableName = "cate_table")
-data class Cate(
+data class Category(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,

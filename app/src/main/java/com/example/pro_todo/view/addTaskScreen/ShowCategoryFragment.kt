@@ -4,28 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.adapter.CateAdapter
-import com.example.pro_todo.adapter.TaskAdapter
 import com.example.pro_todo.database.TaskDatabase
-import com.example.pro_todo.databinding.FragmentDailyTaskBinding
 import com.example.pro_todo.databinding.FragmentShowTagBinding
-import com.example.pro_todo.model.Cate
+import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
-import com.example.pro_todo.model.Task
 import com.example.pro_todo.repository.TaskRepository
-import com.example.pro_todo.view.addTaskScreen.AddTaskFragment
 import com.example.pro_todo.viewModel.CateViewModel
-import com.example.pro_todo.viewModel.TaskViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
 
-class ShowTagFragment : Fragment() {
+class ShowCategoryFragment : Fragment() {
     private lateinit var binding: FragmentShowTagBinding
     private lateinit var cateViewModel: CateViewModel
     private lateinit var rvShowTag: RecyclerView
@@ -63,10 +55,10 @@ class ShowTagFragment : Fragment() {
 
 
 
-    private val onItemCLick: (Cate) -> Unit={
+    private val onItemCLick: (Category) -> Unit={
     }
 
-    private val onItemDelete: (Cate) -> Unit={
+    private val onItemDelete: (Category) -> Unit={
         cateViewModel.deleteCate(it)
     }
 }
