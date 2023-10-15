@@ -14,4 +14,7 @@
     <color name="color_6">#CC8441</color>
     <color name="color_7">#9741CC</color>
     <color name="color_8">#CC4173</color>
+    <color name="gray">#C3A5A5A5</color>
+    <color name="blue">#C3167AD3</color>
+    <color name="selected_date">#0F8CFF</color>
 </resources>

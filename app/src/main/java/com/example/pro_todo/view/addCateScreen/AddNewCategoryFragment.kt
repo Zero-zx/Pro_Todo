@@ -1,8 +1,6 @@
 package com.example.pro_todo.view.addCateScreen
 
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,19 +10,15 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pro_todo.R
 import com.example.pro_todo.adapter.ColorAdapter
 import com.example.pro_todo.adapter.IconAdapter
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddCateBinding
 import com.example.pro_todo.model.Category
-import com.example.pro_todo.model.Icon
-import com.example.pro_todo.repository.TaskRepository
+import com.example.pro_todo.repository.TodoRepository
 import com.example.pro_todo.viewModel.CateViewModel
-import com.example.pro_todo.viewModel.TaskViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
 
 class AddNewCategoryFragment: Fragment() {
@@ -55,7 +49,7 @@ class AddNewCategoryFragment: Fragment() {
         rvColor = binding.rvColor
         btnCreateCate = binding.btnCreateCate
         btnCancel = binding.btnCancel
-        val repository = TaskRepository(TaskDatabase.getInstance(requireContext()).taskDao())
+        val repository = TodoRepository(TaskDatabase.getInstance(requireContext()).cateDao(), TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = TaskViewModelFactory(repository)
         cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
         iconAdapter = IconAdapter(requireContext(), onIconCLick, onIconDelete)

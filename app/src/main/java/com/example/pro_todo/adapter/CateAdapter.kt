@@ -34,8 +34,8 @@ class CateAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         return when(layoutType){
-            FIRST_VIEW -> (holder as FirstCateViewHolder).bind(categoryList[position])
-            SECOND_VIEW -> (holder as SecondCateViewHolder).bind(categoryList[position], onClick)
+            FIRST_VIEW -> (holder as FirstCateViewHolder).bind(categoryList[position], context, onClick)
+            SECOND_VIEW -> (holder as SecondCateViewHolder).bind(categoryList[position], onClick, context)
             else -> throw IllegalArgumentException("Invalid item type")
         }
     }

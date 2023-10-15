@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.pro_todo.model.Task
+import java.util.Date
 
 @Dao
 interface TaskDao {
@@ -23,6 +24,6 @@ interface TaskDao {
 
     @Query("select * from task_table")
     fun getAllTask(): LiveData<List<Task>>
-//    @Query("select * from task_table where task_title=:title")
-//    fun getTaskByTitle(title: String): LiveData<List<Task>>
+    @Query("select * from task_table where date =:date")
+    fun getTaskByDate(date: Date): LiveData<List<Task>>
 }

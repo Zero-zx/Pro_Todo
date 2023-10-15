@@ -6,8 +6,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.example.pro_todo.model.Category
+import com.example.pro_todo.model.CategoryWithTask
 
 @Dao
 interface CategoryDao {
@@ -21,6 +23,8 @@ interface CategoryDao {
     @Query("select * from cate_table")
     fun getAllCate(): LiveData<List<Category>>
 
-    @Query("SELECT * FROM cate_table WHERE id = :id")
-    fun getUserById(id: Long): Category
+
+    @Transaction
+    @Query("SELECT * FROM cate_table WHERE categoryId = :categoryId")
+    fun getCategoryWithTask(categoryId: Int): LiveData<List<CategoryWithTask>>
 }

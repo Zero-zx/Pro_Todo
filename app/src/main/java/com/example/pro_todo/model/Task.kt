@@ -4,6 +4,7 @@ import android.os.Parcelable
 import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.lang.reflect.Constructor
 import java.sql.Time
@@ -17,8 +18,9 @@ data class Task (
     val date: Date,
     val isDone: Boolean,
     val type: String,
-    val categoryId: Int,
+    val categoryCreateId: Int,
     val icon: Int,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 )
+
 

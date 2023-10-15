@@ -21,7 +21,7 @@ import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddTagBinding
 import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
-import com.example.pro_todo.repository.CateRepository
+import com.example.pro_todo.repository.TodoRepository
 import com.example.pro_todo.view.addCateScreen.AddNewCategoryFragment
 import com.example.pro_todo.viewModel.CateViewModel
 import com.example.pro_todo.viewModel.CateViewModelFactory
@@ -60,7 +60,7 @@ class AddCategoryFragment : DialogFragment() {
         btnAddCate = binding.btnAddCate
         nav = requireActivity().findViewById(R.id.btNavigation)
         nav.visibility = View.VISIBLE
-        val repository = CateRepository(TaskDatabase.getInstance(requireContext()).cateDao())
+        val repository = TodoRepository(TaskDatabase.getInstance(requireContext()).cateDao(), TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = CateViewModelFactory(repository)
         cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
         cateViewModel.getAllCate().observe(viewLifecycleOwner, Observer { cate ->
@@ -85,10 +85,11 @@ class AddCategoryFragment : DialogFragment() {
         }
     }
     private val onItemCLick: (Category) -> Unit={
-        callback?.onDataReceived(it.id)
-        Log.d("check", it.id.toString())
+        callback?.onDataReceived(it.categoryId, it.icon)
+        Log.d("check", it.categoryId.toString())
         dismiss()
     }
+
 
     private val onItemDelete: (Category) -> Unit={
         cateViewModel.deleteCate(it)

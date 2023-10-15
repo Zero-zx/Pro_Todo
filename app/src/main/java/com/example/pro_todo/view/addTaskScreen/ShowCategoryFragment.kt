@@ -13,7 +13,7 @@ import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentShowTagBinding
 import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
-import com.example.pro_todo.repository.TaskRepository
+import com.example.pro_todo.repository.TodoRepository
 import com.example.pro_todo.viewModel.CateViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
 
@@ -40,7 +40,7 @@ class ShowCategoryFragment : Fragment() {
     private fun initComponents() {
 //        rvDailyTask = binding.rvDailyTask
         adapter = CateAdapter(requireContext(), CateAdapter.SECOND_VIEW, onItemCLick, onItemDelete, Icon.getIcons())
-        val repository = TaskRepository(TaskDatabase.getInstance(requireContext()).taskDao())
+        val repository = TodoRepository(TaskDatabase.getInstance(requireContext()).cateDao(), TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = TaskViewModelFactory(repository)
         cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
 //        rvDailyTask.adapter = adapter

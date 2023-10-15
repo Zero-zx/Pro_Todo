@@ -41,6 +41,9 @@ android {
         jvmTarget = "17"
     }
 }
+dependencies {
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.3")
+}
 
 dependencies {
 
@@ -57,7 +60,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-
     val room_version = "2.5.2"
 
     implementation("androidx.room:room-runtime:$room_version")
@@ -67,5 +69,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
-
+    implementation ("com.kizitonwose.calendar:view:2.4.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 }

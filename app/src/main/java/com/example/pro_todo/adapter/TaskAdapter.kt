@@ -1,8 +1,10 @@
 package com.example.pro_todo.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pro_todo.model.Task
 import com.example.pro_todo.databinding.TaskViewBinding
@@ -28,9 +30,11 @@ class TaskAdapter(
         holder.binding.apply {
             val task = taskList[position]
             tvTask.text = task.title
-
+            if(task.icon != 0) ivIcon.setImageResource(task.icon)
             val dateFormat = SimpleDateFormat("HH:mm a dd/MM", Locale.getDefault())
+            Log.d("LocalDateAdapter", task.date.toInstant().toString())
             tvTime.text = dateFormat.format(task.date)
+
         }
     }
 

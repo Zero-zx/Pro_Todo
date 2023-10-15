@@ -10,13 +10,15 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TimePicker
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.pro_todo.R
 import com.example.pro_todo.callback.DialogFragmentCallback
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddTaskBinding
 import com.example.pro_todo.model.Task
-import com.example.pro_todo.repository.TaskRepository
+import com.example.pro_todo.repository.TodoRepository
 import com.example.pro_todo.viewModel.TaskViewModel
 import com.example.pro_todo.viewModel.TaskViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -45,6 +47,8 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private var savedYear = 0
     private var savedHour = 0
     private var savedMinute = 0
+
+    private var iconPath = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,7 +66,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
         btnSetTag = binding.btnSetTag
         btnSave = binding.btnSave
 
-        val repository = TaskRepository(TaskDatabase.getInstance(requireContext()).taskDao())
+        val repository = TodoRepository(TaskDatabase.getInstance(requireContext()).cateDao(), TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = TaskViewModelFactory(repository)
         taskViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[TaskViewModel::class.java]
     }
@@ -70,7 +74,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private fun onClickListener(){
         pickDate()
         btnSave.setOnClickListener{
-            val task = Task( etTitle.text.toString(), etDes.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", cateId, R.drawable.ic_study)
+            val task = Task( etTitle.text.toString(), etDes.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", cateId, iconPath)
             taskViewModel.insertTask(task)
             dismiss()
         }
@@ -82,6 +86,10 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
             dialog.show(fragmentManager, "my_dialog")
         }
 
+    }
+
+    fun receiveIconRes(res: Int) {
+        iconPath = res
     }
 
     private fun pickDate() {
@@ -114,7 +122,8 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
         savedMinute = minute
     }
 
-    override fun onDataReceived(id: Int) {
+    override fun onDataReceived(id: Int, iconRes: Int) {
         cateId = id
+        iconPath = iconRes
     }
 }
