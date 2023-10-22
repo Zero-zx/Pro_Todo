@@ -27,15 +27,19 @@ import com.example.pro_todo.R
 import com.example.pro_todo.Utility.displayText
 import com.example.pro_todo.Utility.setTextColorRes
 import com.example.pro_todo.adapter.CateAdapter
+import com.example.pro_todo.adapter.TaskAdapter
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.CalendarDayLayoutBinding
 import com.example.pro_todo.databinding.FragmentHomeBinding
 import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
+import com.example.pro_todo.model.Task
 import com.example.pro_todo.repository.TodoRepository
 import com.example.pro_todo.view.dailyTaskScreen.DailyTaskFragment
 import com.example.pro_todo.viewModel.CateViewModel
 import com.example.pro_todo.viewModel.CateViewModelFactory
+import com.example.pro_todo.viewModel.TaskViewModel
+import com.example.pro_todo.viewModel.TaskViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
@@ -54,11 +58,14 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 class HomeFragment : Fragment() {
+    private lateinit var taskViewModel: TaskViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var cateViewModel: CateViewModel
     private lateinit var nav: BottomNavigationView
-    private lateinit var rvDailyTask: RecyclerView
+    private lateinit var rvCategory: RecyclerView
+    private lateinit var rvAllTask: RecyclerView
     private lateinit var adapter: CateAdapter
+    private lateinit var taskAdapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,15 +82,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun initComponents() {
-        rvDailyTask = binding.rvDailyTask
+        rvCategory = binding.rvCategory
+        rvAllTask = binding.rvAllTask
         adapter = CateAdapter(requireContext(), CateAdapter.FIRST_VIEW, onItemCLick, onItemDelete, Icon.getIcons())
-        rvDailyTask.adapter = adapter
-        rvDailyTask.layoutManager = LinearLayoutManager(requireContext())
+        taskAdapter = TaskAdapter(requireContext(), onCLick, onDelete)
+
+        rvCategory.adapter = adapter
+        rvAllTask.adapter = taskAdapter
+        rvCategory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val repository = TodoRepository(TaskDatabase.getInstance(requireContext()).cateDao(), TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = CateViewModelFactory(repository)
         cateViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[CateViewModel::class.java]
         cateViewModel.getAllCate().observe(viewLifecycleOwner, Observer { cate ->
             adapter.setCate(cate)
+        })
+        rvAllTask.layoutManager = LinearLayoutManager(requireContext())
+        taskViewModel = ViewModelProvider(requireActivity(), TaskViewModelFactory(repository))[TaskViewModel::class.java]
+        taskViewModel.getAllTask().observe(viewLifecycleOwner, Observer { task ->
+            taskAdapter.setTasks(task)
         })
 
         nav = requireActivity().findViewById(R.id.btNavigation)
@@ -108,6 +124,11 @@ class HomeFragment : Fragment() {
     private val onItemDelete: (Category) -> Unit={
         cateViewModel.deleteCate(it)
     }
+    private val onCLick: (Task) -> Unit={
 
+    }
+
+    private val onDelete: (Task) -> Unit={
+    }
 
 }

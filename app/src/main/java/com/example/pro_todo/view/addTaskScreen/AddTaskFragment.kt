@@ -48,6 +48,8 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
 
     private var iconPath = 0
     private var cateName = ""
+
+    private var editTime = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,9 +81,10 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
         btnSave.setOnClickListener{
             val task = requireArguments().getSerializable("task") as Task?
             if(task != null){
+
                 task.title = etTitle.text.toString()
                 task.des = etDes.text.toString()
-                task.date = Date(savedYear, savedMonth, savedDay, savedHour, savedMinute)
+                if(editTime) task.date = Date(savedYear, savedMonth, savedDay, savedHour, savedMinute)
                 task.categoryCreateId = cateId
                 task.type = cateName
                 task.icon = iconPath
@@ -103,13 +106,10 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
 
     }
 
-    fun receiveIconRes(res: Int) {
-        iconPath = res
-    }
-
     private fun pickDate() {
         btnSetTime.setOnClickListener{
             getDateTimeCalendar()
+            editTime = true
             DatePickerDialog(requireContext(), this, year, month, day).show()
         }
     }

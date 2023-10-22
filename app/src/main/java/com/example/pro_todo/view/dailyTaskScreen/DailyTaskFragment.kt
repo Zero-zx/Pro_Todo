@@ -60,7 +60,6 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
     private val monthCalendarView: com.kizitonwose.calendar.view.CalendarView get() = binding.exOneCalendar
     private val selectedDates = mutableSetOf<LocalDate>()
     private val today = LocalDate.now()
-    private val RESULT_KEY = "position"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -100,7 +99,6 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
         updateAdapterForDate(LocalDate.now())
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(rvDailyTask)
-//        val result = requireActivity().supportFragmentManager.setFragmentResultListener()
 
         val daysOfWeek = daysOfWeek(firstDayOfWeek = DayOfWeek.MONDAY)
         val currentMonth = YearMonth.now()
@@ -163,17 +161,11 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     private fun updateAdapterForDate(date: LocalDate) {
 
-        // Get the day of the month from the LocalDate object
         val day = date.dayOfMonth
         val month = date.monthValue
         val year = date.year
-//        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-//
-//        val calendar: Calendar = Calendar.getInstance()
-//        calendar.set(year, month, day)
-
-        // Create a new Date object with the specified day, month, and year
         val dateToDate = Date(year, month-1, day)
+
         taskViewModel.getAllTask().observe(viewLifecycleOwner, Observer { tasks ->
             tasks.let {
                 val filterdTask = tasks.filter { task ->
