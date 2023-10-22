@@ -31,7 +31,6 @@ class IconAdapter(
         holder.binding.apply {
             ivIcon.setImageResource(iconList[position])
             ivIcon.setOnClickListener {
-                Log.d("check", "no")
                 onClick(iconList[position]) }
         }
     }

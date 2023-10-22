@@ -10,6 +10,7 @@ class SecondCateViewHolder(val binding: TagViewBinding): RecyclerView.ViewHolder
 
     fun bind(category: Category, onClick: (Category) -> Unit, context: Context){
         binding.ivIcon.setImageResource(category.icon)
+        binding.tvTitle.text = category.title
         binding.flBackground.backgroundTintList = ColorStateList.valueOf(context.getColor(category.color))
         binding.tagView.setOnClickListener{
             onClick(category)

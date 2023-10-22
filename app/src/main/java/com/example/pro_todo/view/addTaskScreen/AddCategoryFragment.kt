@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,7 @@ import com.example.pro_todo.adapter.CateAdapter
 import com.example.pro_todo.adapter.CateAdapter.Companion.SECOND_VIEW
 import com.example.pro_todo.callback.DialogFragmentCallback
 import com.example.pro_todo.database.TaskDatabase
-import com.example.pro_todo.databinding.FragmentAddTagBinding
+import com.example.pro_todo.databinding.FragmentPickCategoryBinding
 import com.example.pro_todo.model.Category
 import com.example.pro_todo.model.Icon
 import com.example.pro_todo.repository.TodoRepository
@@ -29,7 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class AddCategoryFragment : DialogFragment() {
-    private lateinit var binding: FragmentAddTagBinding
+    private lateinit var binding: FragmentPickCategoryBinding
     private lateinit var cateViewModel: CateViewModel
     private lateinit var rvAddTag: RecyclerView
     private lateinit var adapter: CateAdapter
@@ -45,7 +46,7 @@ class AddCategoryFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddTagBinding.inflate(inflater, container, false)
+        binding = FragmentPickCategoryBinding.inflate(inflater, container, false)
         initComponent()
         onClickListener()
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -85,7 +86,8 @@ class AddCategoryFragment : DialogFragment() {
         }
     }
     private val onItemCLick: (Category) -> Unit={
-        callback?.onDataReceived(it.categoryId, it.icon)
+        callback?.onDataReceived(it.categoryId, it.icon, it.title)
+        Toast.makeText(requireContext(),it.categoryId.toString(), Toast.LENGTH_SHORT).show()
         Log.d("check", it.categoryId.toString())
         dismiss()
     }

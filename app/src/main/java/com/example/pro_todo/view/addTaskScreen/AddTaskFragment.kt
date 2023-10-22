@@ -11,9 +11,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TimePicker
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import com.example.pro_todo.R
 import com.example.pro_todo.callback.DialogFragmentCallback
 import com.example.pro_todo.database.TaskDatabase
 import com.example.pro_todo.databinding.FragmentAddTaskBinding
@@ -49,6 +47,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private var savedMinute = 0
 
     private var iconPath = 0
+    private var cateName = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,18 +64,34 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
         btnSetTime = binding.btnSetTime
         btnSetTag = binding.btnSetTag
         btnSave = binding.btnSave
-
         val repository = TodoRepository(TaskDatabase.getInstance(requireContext()).cateDao(), TaskDatabase.getInstance(requireContext()).taskDao())
         val viewModelFactory = TaskViewModelFactory(repository)
         taskViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[TaskViewModel::class.java]
+        val task = requireArguments().getSerializable("task") as Task?
+        if(task != null){
+            etTitle.setText(task.title)
+            etDes.setText(task.des)
+        }
     }
 
     private fun onClickListener(){
         pickDate()
         btnSave.setOnClickListener{
-            val task = Task( etTitle.text.toString(), etDes.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, "Study", cateId, iconPath)
-            taskViewModel.insertTask(task)
-            dismiss()
+            val task = requireArguments().getSerializable("task") as Task?
+            if(task != null){
+                task.title = etTitle.text.toString()
+                task.des = etDes.text.toString()
+                task.date = Date(savedYear, savedMonth, savedDay, savedHour, savedMinute)
+                task.categoryCreateId = cateId
+                task.type = cateName
+                task.icon = iconPath
+                taskViewModel.updateTask(task)
+                dismiss()
+            }else{
+                val newTask = Task( etTitle.text.toString(), etDes.text.toString(), Date(savedYear, savedMonth, savedDay, savedHour, savedMinute), false, cateName, cateId, iconPath)
+                taskViewModel.insertTask(newTask)
+                dismiss()
+            }
         }
 
         btnSetTag.setOnClickListener{
@@ -122,8 +137,9 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
         savedMinute = minute
     }
 
-    override fun onDataReceived(id: Int, iconRes: Int) {
+    override fun onDataReceived(id: Int, iconRes: Int, name: String) {
         cateId = id
         iconPath = iconRes
+        cateName = name
     }
 }

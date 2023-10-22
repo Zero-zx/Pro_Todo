@@ -1,26 +1,20 @@
 package com.example.pro_todo.model
 
+import android.os.Parcel
 import android.os.Parcelable
-import android.widget.ImageView
-import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.lang.reflect.Constructor
-import java.sql.Time
-import java.time.LocalTime
+import java.io.Serializable
 import java.util.Date
 
 @Entity(tableName = "task_table")
-data class Task (
-    val title: String,
-    val des: String,
-    val date: Date,
+data class Task(
+    var title: String,
+    var des: String,
+    var date: Date,
     val isDone: Boolean,
-    val type: String,
-    val categoryCreateId: Int,
-    val icon: Int,
+    var type: String,
+    var categoryCreateId: Int,
+    var icon: Int,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
-)
-
-
+) : Serializable

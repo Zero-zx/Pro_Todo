@@ -32,9 +32,11 @@ class TaskAdapter(
             tvTask.text = task.title
             if(task.icon != 0) ivIcon.setImageResource(task.icon)
             val dateFormat = SimpleDateFormat("HH:mm a dd/MM", Locale.getDefault())
-            Log.d("LocalDateAdapter", task.date.toInstant().toString())
             tvTime.text = dateFormat.format(task.date)
-
+            dailyTaskList.setOnClickListener {
+                onClick(task)
+            }
+//            Toast.makeText(context, task.date.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

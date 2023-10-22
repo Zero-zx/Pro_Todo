@@ -3,7 +3,6 @@ package com.example.pro_todo.view.dailyTaskScreen
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,13 +45,10 @@ import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import com.kizitonwose.calendar.view.WeekCalendarView
 import com.kizitonwose.calendar.view.WeekDayBinder
-import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
-import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 
 class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
@@ -64,6 +60,7 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
     private val monthCalendarView: com.kizitonwose.calendar.view.CalendarView get() = binding.exOneCalendar
     private val selectedDates = mutableSetOf<LocalDate>()
     private val today = LocalDate.now()
+    private val RESULT_KEY = "position"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,15 +72,22 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
         return binding.root
     }
 
+
     private fun onClickListener() {
         binding.fabAddTask.setOnClickListener{
             val fragmentManager = childFragmentManager
-            val dialog = AddTaskFragment()
-            dialog.show(fragmentManager, "my_dialog")
+
+            val addTaskFragment = AddTaskFragment()
+            addTaskFragment.arguments = Bundle().apply {
+                putSerializable("task", null)
+            }
+
+            addTaskFragment.show(fragmentManager, "my_dialog")
         }
 
 
     }
+
 
     private fun initComponents() {
         rvDailyTask = binding.rvDailyTask
@@ -121,9 +125,7 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     }
 
-
-
-    val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             return false
@@ -136,14 +138,19 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
                // adapter.notifyItemChanged(position)
                 Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show()
             } else if (direction == ItemTouchHelper.RIGHT) {
-                adapter.notifyItemChanged(position)
-                Toast.makeText(requireContext(), "Swipe right", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
 
-    private val onItemCLick: (Task) -> Unit={
 
+    private val onItemCLick: (Task) -> Unit={
+        val addTaskFragment = AddTaskFragment()
+        addTaskFragment.arguments = Bundle().apply {
+            putSerializable("task", it)
+        }
+        addTaskFragment.show(childFragmentManager, "my_dialog")
+        taskViewModel.updateTask(it)
     }
 
     private val onItemDelete: (Task) -> Unit={
@@ -170,11 +177,9 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
         taskViewModel.getAllTask().observe(viewLifecycleOwner, Observer { tasks ->
             tasks.let {
                 val filterdTask = tasks.filter { task ->
-                    task.date.toInstant().toString().substring(0,10) == dateToDate.toInstant().toString().substring(0,10)
+                    task.date.toString().substring(0,10) + task.date.toString().substring(30, 34) == dateToDate.toString().substring(0,10) + dateToDate.toString().substring(30, 34)
                 }
-
-//                Toast.makeText(requireContext(), date.monthValue.toString(), Toast.LENGTH_SHORT).show()
-//                Log.d("LocalDate", dateToDate.c)
+//                Toast.makeText(requireContext(), dateToDate.toString().substring(0,10) + dateToDate.toString().substring(30, 34), Toast.LENGTH_SHORT).show()
                 adapter.setTasks(filterdTask)
             }
         })
@@ -275,7 +280,6 @@ class DailyTaskFragment : Fragment(), CalendarAdapter.OnItemListener {
             selectedDates.remove(date)
         } else {
             selectedDates.add(date)
-
         }
         // Refresh both calendar views..
         monthCalendarView.notifyDateChanged(date)

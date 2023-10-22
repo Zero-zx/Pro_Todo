@@ -67,14 +67,13 @@ class AddNewCategoryFragment: Fragment() {
         }
 
         btnCreateCate.setOnClickListener {
-            val cate = Category("Nice", 0, 1, icon, color)
+            val cate = Category(binding.etTitle.text.toString(), 0, 1, icon, color)
             cateViewModel.insertCate(cate)
             parentFragmentManager.popBackStack()
 
         }
     }
     private val onIconCLick: (Int) -> Unit={
-        Toast.makeText(requireContext(),"Clicked", Toast.LENGTH_SHORT).show()
         ivPreview.setImageResource(it);
         icon = it
     }
@@ -82,7 +81,6 @@ class AddNewCategoryFragment: Fragment() {
     private val onIconDelete: (Int) -> Unit={
     }
     private val onItemCLick: (Int) -> Unit={
-        Toast.makeText(requireContext(),"Clicked", Toast.LENGTH_SHORT).show()
         flPreview.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(it))
         color = it
     }

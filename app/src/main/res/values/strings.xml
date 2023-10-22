@@ -19,5 +19,7 @@
     <string name="create_category">Create Category</string>
     <string name="cancel">Cancel</string>
     <string name="preview">Preview:</string>
+    <string name="study">Study</string>
+    <string name="coming_soon">Coming soon...</string>
 
 </resources>

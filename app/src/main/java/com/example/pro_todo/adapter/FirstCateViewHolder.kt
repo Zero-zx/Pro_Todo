@@ -14,6 +14,7 @@ class FirstCateViewHolder(private val binding: CateViewBinding,
 
     fun bind(category: Category, context: Context, onClick: (Category) -> Unit ){
         binding.ivIc.setImageResource(category.icon)
+        binding.tvTitle.text = category.title
         binding.clBackground.backgroundTintList = ColorStateList.valueOf(context.getColor(category.color))
         binding.clBackground.setOnClickListener{
             onClick(category)

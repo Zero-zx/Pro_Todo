@@ -10,7 +10,8 @@
         android:id="@+id/llMonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <LinearLayout
             android:layout_marginTop="8dp"
@@ -63,13 +64,13 @@
         <com.kizitonwose.calendar.view.WeekCalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             app:cv_dayViewResource="@layout/calendar_day_layout" />
 
         <com.kizitonwose.calendar.view.CalendarView
             android:id="@+id/exOneCalendar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             app:cv_dayViewResource="@layout/calendar_day_layout" />
     </FrameLayout>
 
